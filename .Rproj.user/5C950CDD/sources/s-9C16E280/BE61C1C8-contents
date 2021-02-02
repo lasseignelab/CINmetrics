@@ -1,0 +1,75 @@
+##### Total Aberration Index #####
+# Total Aberration Index calculation takes the sum of lengths of each segment times its segmentation mean for each sample and divides it by the sum of the lengths of each sample.
+# Input: Sample IDs, CNV data
+# Output: Average of lengths weighted by segmentation mean.
+tai.original <- function(ids, maskCNV.data, segMean = 0.2, numProbes = NA ){
+  #k <- length(ids)
+  tai.output <- data.frame(matrix(ncol = 1, nrow = length(ids)))
+  for (i in 1:length(ids)){
+    id <- ids[i]
+    subsetSample<-subset(maskCNV.data, maskCNV.data$Sample == id )
+    subsetSample<-subset(subsetSample, abs(subsetSample$Segment_Mean) >= segMean)
+    if (!is.na(numProbes)){
+      subsetSample<-subset(subsetSample, abs(subsetSample$Num_Probes) >= numProbes)
+    }
+    Length<-subsetSample$End - subsetSample$Start
+    num <- Length*abs(subsetSample$Segment_Mean)
+    den <- Length
+    tai.calc <- sum(sum(num)/sum(den))
+    tai.output[i,] <- tai.calc
+  }
+  return(tai.output)
+}
+
+### Modified Total Aberration Index
+mod.tai <- function(ids, maskCNV.data, segMean = 0, numProbes = NA ){
+  #k <- length(ids)
+  tai.output <- data.frame(matrix(ncol = 1, nrow = length(ids)))
+  for (i in 1:length(ids)){
+    id <- ids[i]
+    subsetSample<-subset(maskCNV.data, maskCNV.data$Sample == id )
+    subsetSample<-subset(subsetSample, abs(subsetSample$Segment_Mean) >= segMean)
+    if (!is.na(numProbes)){
+      subsetSample<-subset(subsetSample, abs(subsetSample$Num_Probes) >= numProbes)
+    }
+    Length <- subsetSample$End - subsetSample$Start
+    num <- Length*subsetSample$Segment_Mean
+    den <- Length
+    tai.calc <- sum(sum(num)/sum(den))
+    tai.output[i,] <- tai.calc
+  }
+  return(tai.output)
+}
+
+##### Copy Number Aberration #####
+# Calculates the number of copy number aberrations.
+# Nearly identical to countingBreakPoints, except this one calculates breaks as adjacent segments that have a difference in segment means of >= 0.2.
+# Input: Sample IDs, CNV Data, (min thresholds for Segment Mean, Number of Probes, Segment Distnace threshold, and Segment Sizes)
+# Output: Number of copy number aberrations between segments
+cna.original <- function(ids, maskCNV.data, segMean = (log(1.7,2)-1), numProbes = NA, segDistance = 0.2, minSegSize = 10){
+  cna.output <- data.frame(matrix(ncol = 1, nrow = length(ids)))
+  for (i in 1:length(ids)){
+    id <- ids[i]
+    exSample <- subset(maskCNV.data, maskCNV.data$Sample == id )
+    exSample <- subset(exSample, abs(exSample$Segment_Mean) >= abs(segMean) & !is.na(exSample$Segment_Mean))
+    exSample <- subset(exSample, abs(exSample$End - exSample$Start) >= minSegSize)
+    if (!is.na(numProbes)){
+      exSample<-subset(exSample, abs(exSample$Num_Probes) >= numProbes)
+    }
+    breakpointNumber <- 0
+    curSig <- NA
+    for (segment in 1:nrow(exSample)){
+      if (is.na(curSig)){
+        curSig <- exSample$Segment_Mean[segment]
+      }
+      else {
+        if (!is.na(curSig) & abs(curSig - exSample$Segment_Mean[segment]) >= segDistance){
+          breakpointNumber = breakpointNumber + 1
+          curSig <- exSample$Segment_Mean[segment]
+        }
+      }
+    }
+    cna.output[i,] <- breakpointNumber
+  }
+  return(cna.output)
+}

@@ -1,0 +1,101 @@
+"0","    library(BgeeDB)
+"
+"2","Loading required package: topGO
+"
+"2","Loading required package: BiocGenerics
+"
+"2","Loading required package: parallel
+"
+"2","
+Attaching package: ‘BiocGenerics’
+
+"
+"2","The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ, clusterExport, clusterMap, parApply,
+    parCapply, parLapply, parLapplyLB, parRapply, parSapply, parSapplyLB
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames, dirname, do.call, duplicated,
+    eval, evalq, Filter, Find, get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply, match,
+    mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rownames,
+    sapply, setdiff, sort, table, tapply, union, unique, unsplit, which, which.max, which.min
+
+"
+"2","Loading required package: graph
+"
+"2","Loading required package: Biobase
+"
+"2","Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with 'browseVignettes()'. To cite Bioconductor,
+    see 'citation(""Biobase"")', and for packages 'citation(""pkgname"")'.
+
+"
+"2","Loading required package: GO.db
+"
+"2","Loading required package: AnnotationDbi
+"
+"2","Loading required package: stats4
+"
+"2","Loading required package: IRanges
+"
+"2","Loading required package: S4Vectors
+"
+"2","package ‘S4Vectors’ was built under R version 3.6.3"
+"2","
+Attaching package: ‘S4Vectors’
+
+"
+"2","The following object is masked from ‘package:base’:
+
+    expand.grid
+
+"
+"2","
+"
+"2","Loading required package: SparseM
+"
+"2","
+Attaching package: ‘SparseM’
+
+"
+"2","The following object is masked from ‘package:base’:
+
+    backsolve
+
+"
+"2","
+groupGOTerms: 	GOBPTerm, GOMFTerm, GOCCTerm environments built.
+"
+"2","
+Attaching package: ‘topGO’
+
+"
+"2","The following object is masked from ‘package:IRanges’:
+
+    members
+
+"
+"2","Loading required package: tidyr
+"
+"2","
+Attaching package: ‘tidyr’
+
+"
+"2","The following object is masked from ‘package:S4Vectors’:
+
+    expand
+
+"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"

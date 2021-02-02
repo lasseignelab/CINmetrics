@@ -1,0 +1,6 @@
+"0","usethis::use_data(maskCNV.BRCA, maskCNV.BRCA)
+"
+"2","Saving duplicates only once: [34m'maskCNV.BRCA'[39m"
+"2","Error: [34m'data/maskCNV.BRCA.rda'[39m already exist.,
+Use [90m`overwrite = TRUE`[39m to overwrite.
+"
