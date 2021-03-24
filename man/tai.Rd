@@ -2,10 +2,7 @@
 % Please edit documentation in R/cin_metrics.R
 \name{tai}
 \alias{tai}
-\title{Total Aberration Index
-Total Aberration Index calculation takes the sum of lengths of each segment
-times its segmentation mean for each sample and divides it by the sum of the
-lengths of each sample.}
+\title{Total Aberration Index}
 \usage{
 tai(cnvData, segmentMean = 0.2, numProbes = NA)
 }
@@ -20,8 +17,18 @@ tai(cnvData, segmentMean = 0.2, numProbes = NA)
 Average of lengths weighted by segmentation mean for each unique sample
 }
 \description{
-Total Aberration Index
 Total Aberration Index calculation takes the sum of lengths of each segment
 times its segmentation mean for each sample and divides it by the sum of the
 lengths of each sample.
+}
+\details{
+The Total Aberration Index (TAI) \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3553118/}{(Baumbusch LO, et. al.)} is ``a measure of the abundance of genomic size of copy number changes in a tumour".
+It is defined as a weighted sum of the segment means
+\deqn{
+Total\ Aberration\ Index =
+ \frac
+{\sum^{R}_{i = 1} {d_i} \cdot |{\bar{y}_{S_i}}|}
+{\sum^{R}_{i = 1} {d_i}}\ \
+where |\bar{y}_{S_i}| \ge |\log_2 1.7|
+}
 }

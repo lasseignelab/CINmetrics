@@ -2,9 +2,7 @@
 % Please edit documentation in R/cin_metrics.R
 \name{cna}
 \alias{cna}
-\title{Copy Number Aberration
-Calculates the number of copy number aberrations
-Nearly identical to countingBreakPoints, except this one calculates breaks as adjacent segments that have a difference in segment means of >= 0.2.}
+\title{Copy Number Aberration}
 \usage{
 cna(
   cnvData,
@@ -29,7 +27,16 @@ cna(
 Number of copy number aberrations between segments
 }
 \description{
-Copy Number Aberration
 Calculates the number of copy number aberrations
-Nearly identical to countingBreakPoints, except this one calculates breaks as adjacent segments that have a difference in segment means of >= 0.2.
+}
+\details{
+Copy Number Aberrations (CNA) \href{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0079079}{(Davidson JM, et al)}, are defined as a segment with copy number outside the pre-defined range of 1.7-2.3 \deqn{(\log_2 1.7 -1) \le \bar{y}_{S_i} \le (\log_2 2.3 -1)} that is not contiguous with an adjacent independent CNA of identical copy number. For our purposes, we have adapted the range to be \deqn{|\bar{y}_{S_i}| \ge |\log_2 1.7|}, which is only slightly larger than the original.
+It is nearly identical to countingBreakPoints, except this one calculates breaks as adjacent segments that have a difference in segment means of \eqn{\ge 0.2}.
+\deqn{Total\ Copy\ Number\ Aberration = \sum^{R}_{i = 1} n_i \ where \
+\bar{y}_{S_i}| \ge |\log_2{1.7}|, \
+\bar{y}_{S_{i-1}} - \bar{y}_{S_i}| \ge 0.2, \
+d_i \ge 10}
+}
+\seealso{
+\code{\link{countingBreakPoints}}
 }

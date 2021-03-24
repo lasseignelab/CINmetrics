@@ -2,10 +2,7 @@
 % Please edit documentation in R/cin_metrics.R
 \name{countingBaseSegments}
 \alias{countingBaseSegments}
-\title{countingBaseSegments
-Function for counting altered base segments
-The Altered Base Segment calculation takes all the CNV data for a single patient and first filters it for a segmentation mean of > 0.2 and, if specified, the minimum number of probes
-covering that area. Then, it calculates the sums of the lengths of each segment for a particular patient and outputs that.}
+\title{countingBaseSegments}
 \usage{
 countingBaseSegments(cnvData, segmentMean = 0.2, numProbes = NA)
 }
@@ -20,8 +17,12 @@ countingBaseSegments(cnvData, segmentMean = 0.2, numProbes = NA)
 Number of Base segments for each unique sample
 }
 \description{
-countingBaseSegments
 Function for counting altered base segments
+}
+\details{
 The Altered Base Segment calculation takes all the CNV data for a single patient and first filters it for a segmentation mean of > 0.2 and, if specified, the minimum number of probes
 covering that area. Then, it calculates the sums of the lengths of each segment for a particular patient and outputs that.
+\deqn{
+Number\ of\ Altered\ Bases = \sum^{R}_{i = 1} d_i\ where\ |\bar{y}_{S_i}| \ge 0.2
+}
 }

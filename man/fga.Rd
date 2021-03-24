@@ -2,8 +2,7 @@
 % Please edit documentation in R/cin_metrics.R
 \name{fga}
 \alias{fga}
-\title{Fraction Genome Altered
-Fraction Genome Altered looks at the fraction of the genome that deviates from a diploid state}
+\title{Fraction Genome Altered}
 \usage{
 fga(cnvData, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203431)
 }
@@ -20,6 +19,13 @@ fga(cnvData, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203431)
 Fraction of the genome altered
 }
 \description{
-Fraction Genome Altered
 Fraction Genome Altered looks at the fraction of the genome that deviates from a diploid state
+fga calculates the fraction of the genome altered (FGA; [Chin SF, et. al.](https://www.ncbi.nlm.nih.gov/pubmed/17925008)), measured by taking the sum of the number of bases altered and dividing it by the genome length covered ($G$). Genome length covered was calculated by summing the lengths of each probe on the Affeymetrix 6.0 array. This calculation **excludes** sex chromosomes.
+\deqn{
+Fraction\ Genome\ Altered =
+\frac
+{\sum^{R}_{i = 1} d_i}
+{G}
+\ \ where\  |\bar{y}_{S_i}| \ge 0.2
+}
 }

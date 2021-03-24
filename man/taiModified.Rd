@@ -2,10 +2,7 @@
 % Please edit documentation in R/cin_metrics.R
 \name{taiModified}
 \alias{taiModified}
-\title{Modified Total Aberration Index
-Modified Total Aberration Index calculation takes the sum of lengths of each segment
-times its segmentation mean for each sample and divides it by the sum of the
-lengths of each sample.}
+\title{Modified Total Aberration Index}
 \usage{
 taiModified(cnvData, segmentMean = 0, numProbes = NA)
 }
@@ -20,8 +17,19 @@ taiModified(cnvData, segmentMean = 0, numProbes = NA)
 Average of lengths weighted by segmentation mean for each unique sample
 }
 \description{
-Modified Total Aberration Index
 Modified Total Aberration Index calculation takes the sum of lengths of each segment
 times its segmentation mean for each sample and divides it by the sum of the
 lengths of each sample.
+}
+\details{
+Modified Total Aberration Index uses all sample values instead of those in aberrant copy number state, thus does not remove the directionality from the score.
+\deqn{
+Modified\ Total\ Aberration\ Index =
+\frac
+{\sum^{R}_{i = 1} {d_i} \cdot {\bar{y}_{S_i}}}
+{\sum^{R}_{i = 1} {d_i}}
+}
+}
+\seealso{
+\code{\link{tai}}
 }

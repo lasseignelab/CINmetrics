@@ -44,7 +44,7 @@ Alternatively, you can download the data from TCGA using TCGAbiolinks package
 
 ## Total Aberration Index
 
-The Total Aberration Index (TAI; [Baumbusch LO, et. al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3553118/)) is "a measure of the abundance of genomic size of copy number changes in a tumour". It is defined as a weighted sum of the segment means ($|\bar{y}_{S_i}|$). 
+*tai* calculates the Total Aberration Index (TAI; [Baumbusch LO, et. al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3553118/)), "a measure of the abundance of genomic size of copy number changes in a tumour". It is defined as a weighted sum of the segment means ($|\bar{y}_{S_i}|$). 
 
 Biologically, it can also be interpreted as the absolute deviation from the normal copy number state averaged over all genomic locations.
 
@@ -62,7 +62,7 @@ head(tai.test)
 
 ## Modified Total Aberration Index
 
-Modified Total Aberration Index uses all sample values instead of those in aberrant copy number state, thus does not remove the directionality from the score.
+*taiModified* calculates a modified Total Aberration Index using all sample values instead of those in aberrant copy number state, thus does not remove the directionality from the score.
 
 $$
 Modified\ Total\ Aberration\ Index = 
@@ -82,7 +82,7 @@ head(modified.tai.test)
 This metric is very similar to the number of break points, but it comes with the caveat that adjacent segments need to have a difference in segmentation mean values.
 
 $$
-Total\ Copy\ Number\ Abnormalities = \sum^{R}_{i = 1} n_i
+Total\ Copy\ Number\ Abberation = \sum^{R}_{i = 1} n_i
 \ \ where\ \ 
 \begin{align}
 |\bar{y}_{S_i}| \ge |\log_2{1.7}|, \\ |\bar{y}_{S_{i-1}} - \bar{y}_{S_i}| \ge 0.2, \\ d_i \ge 10
@@ -139,4 +139,13 @@ $$
 fraction.genome.test <- fga(cnvData = maskCNV.BRCA)
 head(fraction.genome.test)
 ```
+
+## CINmetrics
+*CINmetrics* calculates tai, cna, number of altered base segments, number of break points, and fraction of genome altered and returns them as a single data frame. 
+
+```{r}
+cinmetrics.test <- CINmetrics(cnvData = maskCNV.BRCA)
+head(cinmetrics.test)
+```
+
 

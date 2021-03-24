@@ -2,7 +2,7 @@
 #' Data Release 25.0
 #' GDC Product: Data
 #' Release Date: July 22, 2020
-#' Masked Copy Number variation data for Breast Cancer from TCGA
+#' Masked Copy Number variation data for Breast Cancer selected randomly from TCGA
 #' @docType data
 #' @usage data(maskCNV.BRCA)
 #' @format An object of class dataframe

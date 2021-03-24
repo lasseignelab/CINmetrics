@@ -7,7 +7,7 @@
 Data Release 25.0
 GDC Product: Data
 Release Date: July 22, 2020
-Masked Copy Number variation data for Breast Cancer from TCGA}
+Masked Copy Number variation data for Breast Cancer selected randomly from TCGA}
 \format{
 An object of class dataframe
 }
@@ -22,7 +22,7 @@ Breast Cancer Data from TCGA
 Data Release 25.0
 GDC Product: Data
 Release Date: July 22, 2020
-Masked Copy Number variation data for Breast Cancer from TCGA
+Masked Copy Number variation data for Breast Cancer selected randomly from TCGA
 }
 \examples{
 data(maskCNV.BRCA)
