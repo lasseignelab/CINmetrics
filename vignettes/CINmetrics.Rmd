@@ -23,12 +23,15 @@ The goal of CINmetrics package is to provide different methods of calculating Ch
 
 ```{r setup}
 library(CINmetrics)
+```
+The dataset provided with CINmetrics package is masked Copy Number variation data for Breast Cancer for 10 unique samples selected randomly from TCGA.
 
-data("maskCNV.BRCA")
-head(maskCNV.BRCA)
+```{r}
+dim(maskCNV_BRCA)
 ```
 
-Alternatively, you can download the data from TCGA using TCGAbiolinks package
+
+Alternatively, you can download the entire dataset from TCGA using TCGAbiolinks package
 ```{r}
 ## Not run:
 #library(TCGAbiolinks)
@@ -56,7 +59,7 @@ Total\ Aberration\ Index =
 where |\bar{y}_{S_i}| \ge |\log_2 1.7|
 $$
 ```{r}
-tai.test <- tai(cnvData = maskCNV.BRCA)
+tai.test <- tai(cnvData = maskCNV_BRCA)
 head(tai.test)
 ```
 
@@ -71,7 +74,7 @@ Modified\ Total\ Aberration\ Index =
 {\sum^{R}_{i = 1} {d_i}}
 $$
 ```{r}
-modified.tai.test <- taiModified(cnvData = maskCNV.BRCA)
+modified.tai.test <- taiModified(cnvData = maskCNV_BRCA)
 head(modified.tai.test)
 ```
 
@@ -82,14 +85,14 @@ head(modified.tai.test)
 This metric is very similar to the number of break points, but it comes with the caveat that adjacent segments need to have a difference in segmentation mean values.
 
 $$
-Total\ Copy\ Number\ Abberation = \sum^{R}_{i = 1} n_i
+Total\ Copy\ Number\ Aberration = \sum^{R}_{i = 1} n_i
 \ \ where\ \ 
 \begin{align}
 |\bar{y}_{S_i}| \ge |\log_2{1.7}|, \\ |\bar{y}_{S_{i-1}} - \bar{y}_{S_i}| \ge 0.2, \\ d_i \ge 10
 \end{align}
 $$
 ```{r}
-cna.test <- cna(cnvData = maskCNV.BRCA)
+cna.test <- cna(cnvData = maskCNV_BRCA)
 head(cna.test)
 ```
 
@@ -104,7 +107,7 @@ $$
 Number\ of\ Altered\ Bases = \sum^{R}_{i = 1} d_i\ where\ |\bar{y}_{S_i}| \ge 0.2
 $$
 ```{r}
-base.seg.test <- countingBaseSegments(cnvData = maskCNV.BRCA)
+base.seg.test <- countingBaseSegments(cnvData = maskCNV_BRCA)
 head(base.seg.test)
 ```
 
@@ -119,13 +122,13 @@ Number\ of \ Break\ Points = \sum^{R}_{i = 1} (n_i \cdot 2)\ where\ |\bar{y}_{S_
 $$
 
 ```{r}
-break.points.test <- countingBreakPoints(cnvData = maskCNV.BRCA)
+break.points.test <- countingBreakPoints(cnvData = maskCNV_BRCA)
 head(break.points.test)
 ```
 
 ## Fraction of Genome Altered
 
-*fga* calculates the fraction of the genome altered (FGA; [Chin SF, et. al.](https://www.ncbi.nlm.nih.gov/pubmed/17925008)), measured by taking the sum of the number of bases altered and dividing it by the genome length covered ($G$). Genome length covered was calculated by summing the lengths of each probe on the Affeymetrix 6.0 array. This calculation **excludes** sex chromosomes.
+*fga* calculates the fraction of the genome altered (FGA; [Chin SF, et. al.](https://pubmed.ncbi.nlm.nih.gov/17925008/)), measured by taking the sum of the number of bases altered and dividing it by the genome length covered ($G$). Genome length covered was calculated by summing the lengths of each probe on the Affeymetrix 6.0 array. This calculation **excludes** sex chromosomes.
 
 $$
 Fraction\ Genome\ Altered = 
@@ -136,7 +139,7 @@ Fraction\ Genome\ Altered =
 $$
 
 ```{r}
-fraction.genome.test <- fga(cnvData = maskCNV.BRCA)
+fraction.genome.test <- fga(cnvData = maskCNV_BRCA)
 head(fraction.genome.test)
 ```
 
@@ -144,7 +147,7 @@ head(fraction.genome.test)
 *CINmetrics* calculates tai, cna, number of altered base segments, number of break points, and fraction of genome altered and returns them as a single data frame. 
 
 ```{r}
-cinmetrics.test <- CINmetrics(cnvData = maskCNV.BRCA)
+cinmetrics.test <- CINmetrics(cnvData = maskCNV_BRCA)
 head(cinmetrics.test)
 ```
 

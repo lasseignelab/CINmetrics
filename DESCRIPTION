@@ -1,10 +1,10 @@
 Package: CINmetrics
 Type: Package
-Title: Calculate chromosomal instability metrics
+Title: Calculate Chromosomal Instability Metrics
 Version: 0.1.0
 Author: Vishal H. Oza
 Maintainer: Vishal H. Oza <vishoza@uab.edu>
-Description: CINmetrics provides functions to calculate various chromosomal instability metrics on masked CNV data at individual sample level.
+Description: CINmetrics (Chromosomal INstability metrics) provides functions to calculate various chromosomal instability metrics on masked Copy Number Variation(CNV) data at individual sample level.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
