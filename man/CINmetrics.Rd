@@ -44,3 +44,6 @@ All Chromosomal INstability metrics
 \description{
 Calculate all CINmetrics on a given dataframe
 }
+\examples{
+CINmetrics(cnvData = maskCNV_BRCA)
+}

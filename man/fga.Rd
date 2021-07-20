@@ -29,3 +29,6 @@ Fraction\ Genome\ Altered =
 \ \ where\  |\bar{y}_{S_i}| \ge 0.2
 }
 }
+\examples{
+fga(cnvData = maskCNV_BRCA)
+}

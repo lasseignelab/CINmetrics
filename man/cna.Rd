@@ -37,6 +37,9 @@ It is nearly identical to countingBreakPoints, except this one calculates breaks
 \bar{y}_{S_{i-1}} - \bar{y}_{S_i}| \ge 0.2, \
 d_i \ge 10}
 }
+\examples{
+cna(cnvData = maskCNV_BRCA)
+}
 \seealso{
 \code{\link{countingBreakPoints}}
 }

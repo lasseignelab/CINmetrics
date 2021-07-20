@@ -32,3 +32,6 @@ Total\ Aberration\ Index =
 where |\bar{y}_{S_i}| \ge |\log_2 1.7|
 }
 }
+\examples{
+tai(cnvData = maskCNV_BRCA)
+}

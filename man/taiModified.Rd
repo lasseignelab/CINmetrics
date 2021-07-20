@@ -30,6 +30,9 @@ Modified\ Total\ Aberration\ Index =
 {\sum^{R}_{i = 1} {d_i}}
 }
 }
+\examples{
+taiModified(cnvData = maskCNV_BRCA)
+}
 \seealso{
 \code{\link{tai}}
 }

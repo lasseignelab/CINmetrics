@@ -26,3 +26,6 @@ covering that area. Then, it calculates the sums of the lengths of each segment 
 Number\ of\ Altered\ Bases = \sum^{R}_{i = 1} d_i\ where\ |\bar{y}_{S_i}| \ge 0.2
 }
 }
+\examples{
+countingBaseSegments(cnvData = maskCNV_BRCA)
+}
