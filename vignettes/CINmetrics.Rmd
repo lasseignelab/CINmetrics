@@ -80,7 +80,7 @@ head(modified.tai.test)
 
 ## Copy Number Aberration
 
-*cna* calculates the total number of copy number aberrations (CNA; [Davidson JM, et al](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0079079)), defined as a segment with copy number outside the pre-defined range of 1.7-2.3 ($(\log_2 1.7 -1) \le \bar{y}_{S_i} \le (\log_2 2.3 -1)$) that is not contiguous with an adjacent independent CNA of identical copy number. For our purposes, we have adapted the range to be $|\bar{y}_{S_i}| \ge |\log_2 1.7|$, which is only slightly larger than the original. 
+*cna* calculates the total number of copy number aberrations (CNA; [Davidson JM, et. al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0079079)), defined as a segment with copy number outside the pre-defined range of 1.7-2.3 ($(\log_2 1.7 -1) \le \bar{y}_{S_i} \le (\log_2 2.3 -1)$) that is not contiguous with an adjacent independent CNA of identical copy number. For our purposes, we have adapted the range to be $|\bar{y}_{S_i}| \ge |\log_2 1.7|$, which is only slightly larger than the original. 
 
 This metric is very similar to the number of break points, but it comes with the caveat that adjacent segments need to have a difference in segmentation mean values.
 

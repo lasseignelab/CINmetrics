@@ -19,6 +19,7 @@
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @return Average of lengths weighted by segmentation mean for each unique sample
+#' @example tai(cnvData = maskCNV_BRCA)
 #' @export
 tai <- function(cnvData, segmentMean = 0.2, numProbes = NA ){
   unique_id <- unique(cnvData$Sample)
@@ -60,6 +61,7 @@ tai <- function(cnvData, segmentMean = 0.2, numProbes = NA ){
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @return Average of lengths weighted by segmentation mean for each unique sample
+#' @example taiModified(cnvData = maskCNV_BRCA)
 #' @export
 taiModified <- function(cnvData, segmentMean = 0, numProbes = NA ){
   unique_id <- unique(cnvData$Sample)
@@ -99,6 +101,7 @@ taiModified <- function(cnvData, segmentMean = 0, numProbes = NA ){
 #' @param segmentDistance Segment distance threshold
 #' @param minSegSize Minimum segment size
 #' @return Number of copy number aberrations between segments
+#' @example cna(cnvData = maskCNV_BRCA)
 #' @export
 cna <- function(cnvData, segmentMean = (log(1.7,2)-1), numProbes = NA, segmentDistance = 0.2, minSegSize = 10){
   unique_id <- unique(cnvData$Sample)
@@ -145,6 +148,7 @@ cna <- function(cnvData, segmentMean = (log(1.7,2)-1), numProbes = NA, segmentDi
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @return Number of Base segments for each unique sample
+#' @example countingBaseSegments(cnvData = maskCNV_BRCA)
 #' @export
 countingBaseSegments <- function(cnvData, segmentMean = 0.2, numProbes = NA ){
   unique_id <- unique(cnvData$Sample)
@@ -177,6 +181,7 @@ countingBaseSegments <- function(cnvData, segmentMean = 0.2, numProbes = NA ){
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @return Number of Break points for each unique sample
+#' @example countingBreakPoints(cnvData = maskCNV_BRCA)
 #' @export
 countingBreakPoints <- function(cnvData, segmentMean = 0.2, numProbes = NA){
   unique_id <- unique(cnvData$Sample)
@@ -213,6 +218,7 @@ countingBreakPoints <- function(cnvData, segmentMean = 0.2, numProbes = NA){
 #' @param numProbes Number of Probes
 #' @param genomeSize Size of the genome derived from Affymetrix 6.0 array probe. Default is 2873203431 calculated based on hg38 **excluding sex chromosomes**
 #' @return Fraction of the genome altered
+#' @example fga(cnvData = maskCNV_BRCA)
 #' @export
 fga <- function(cnvData, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203431){
   # genomeSize derived from Affymetrix 6.0 array probe information. The default values is 2873203431 based on hg38
@@ -251,6 +257,7 @@ fga <- function(cnvData, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203
 #' @param minSegSize_cna Minimum segment size
 #' @param genomeSize_fga Size of the genome derived from Affymetrix 6.0 array probe. Default is 2873203431 calculated based on hg38 **excluding sex chromosomes**
 #' @return All Chromosomal INstability metrics
+#' @example CINmetrics(cnvData = maskCNV_BRCA)
 #' @export
 CINmetrics <- function(cnvData, segmentMean_tai = 0.2, segmentMean_cna = (log(1.7,2)-1), segmentMean_base_segments = 0.2, segmentMean_break_points = 0.2, segmentMean_fga = 0.2, numProbes = NA, segmentDistance_cna = 0.2, minSegSize_cna = 10, genomeSize_fga = 2873203431){
   # Calculate all Chromosomal Instability metrics as a single data frame
