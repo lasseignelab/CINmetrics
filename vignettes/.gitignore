@@ -1,2 +1,5 @@
 *.html
 *.R
+/GDCdata/
+Fig1.pdf
+Fig1.jpeg

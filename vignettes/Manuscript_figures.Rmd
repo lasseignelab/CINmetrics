@@ -1,0 +1,114 @@
+---
+title: "Manuscript_figures"
+author: "Vishal Oza"
+date: "8/5/2021"
+output: html_document
+---
+
+```{r}
+library(CINmetrics)
+library(TCGAbiolinks)
+library(tidyverse)
+library(ggpubr)
+library(corrplot)
+library(ComplexHeatmap)
+library(circlize)
+library(cowplot)
+library(grid)
+library(gridExtra)
+```
+
+```{r}
+## Downloading CNV BRCA data from TCGA and preparing input data frame
+query.maskCNV.hg39.BRCA <- GDCquery(project = "TCGA-BRCA",
+              data.category = "Copy Number Variation",
+              data.type = "Masked Copy Number Segment", legacy=FALSE)
+GDCdownload(query = query.maskCNV.hg39.BRCA)
+maskCNV.BRCA <- GDCprepare(query = query.maskCNV.hg39.BRCA, summarizedExperiment = TRUE)
+maskCNV.BRCA <- data.frame(maskCNV.BRCA, stringsAsFactors = FALSE)
+```
+
+
+
+```{r}
+## Running CINmetrics on BRCA data frame
+cinmetrics.test <- CINmetrics(cnvData = maskCNV.BRCA)
+mod.tai <- taiModified(cnvData = maskCNV.BRCA)
+cinmetrics.test <- inner_join(cinmetrics.test, mod.tai, by = c("sample_id"), copy = TRUE)
+head(cinmetrics.test)
+cinmetrics.data <- cinmetrics.test %>%
+  pivot_longer(!sample_id, names_to = "cinmetric", values_to = "value") %>%
+  separate(sample_id, c("patient", "type"), 12) %>%
+  separate(type, c("tumour"), -13)
+
+cinmetrics.data$tumour <-  as.numeric(str_remove(cinmetrics.data$tumour, "-"))
+cinmetrics.data <- cinmetrics.data %>% 
+  mutate(type = case_when(tumour == 1 | tumour == 6 ~ "tumor",
+                          tumour == 10 | tumour == 11 ~ "normal"))
+
+```
+
+
+```{r}
+## Plotting CINmetrics calculated for BRCA
+
+figure1 <- cinmetrics.data %>% mutate(value = log10(value)) %>% 
+  ggstripchart(., x = "cinmetric",
+      y = "value",
+      combine = TRUE,
+      #merge = TRUE,
+      ylab = "",
+      xlab = "",
+      color = "type", 
+      size = 0.5,
+      fill = "type",
+      font.label = c(10, "bold", "black"),
+      #shape = "type",
+      palette = "simpsons",
+      alpha = 0.5,
+      add = "mean_sd", add.params = list(size = 0.1, alpha = 1, group = "type", color = "black"), 
+      orientation = "horiz",
+      order = c("fga", "base_segments", "break_points", "cna", "modified_tai", "tai"),
+      position = position_jitterdodge() 
+      ) + font("xy.text", size = 10, color = "black", face = "bold")
+
+figure2 <- ggpar(figure1, main = "CINmetrics distribution in BRCA", ylab = "log10(metric)", font.main = c(12, "bold", "black"), font.y = c(12, "bold", "black"), font.x = c(12, "bold", "black"), legend = c(0.85,0.85), legend.title = "Sample type", font.legend = c(12, "bold", "black")) #%>% ggexport(filename = "figure2.pdf")
+```
+
+```{r}
+
+## Calculating correlation between the CINmetrics and plotting the heatmap
+cin.corr.df <- cinmetrics.test %>%
+  separate(sample_id, c("patient", "type"), 12) %>%
+  separate(type, c("tumour"), -13)
+
+cin.corr.df$tumour <-  as.numeric(str_remove(cin.corr.df$tumour, "-"))
+cin.corr.df <- cin.corr.df %>% 
+  mutate(type = case_when(tumour == 1 | tumour == 6 ~ "tumor",
+                          tumour == 10 | tumour == 11 ~ "normal"))
+
+col_simpson <- colorRamp2(c(-1, 0, 1), c("#f8db27", "#ffffff", "#2f64d6"))
+
+ht_opt(heatmap_column_names_gp = gpar(fontface = "bold", fontsize = 12),
+       heatmap_row_names_gp = gpar(fontface = "bold", fontsize = 12),
+       heatmap_column_title_gp = gpar(fontface = "bold", fontsize = 12),
+       legend_border = "black", legend_labels_gp = gpar(fontface = "bold", fontsize = 10),
+       heatmap_border = TRUE)
+normal.heatmap <- cin.corr.df %>% filter(type == "normal") %>% select(3:8) %>% cor(., method = "spearman") %>% Heatmap(name = "rho", col = col_simpson, column_title = "Normal samples", row_names_side = "left", show_row_dend = TRUE)
+tumor.heatmap <- cin.corr.df %>% filter(type == "tumor") %>% select(3:8) %>% cor(., method = "spearman") %>% Heatmap(col = col_simpson, show_heatmap_legend = FALSE, column_title = "Tumour samples", show_row_names = FALSE, row_dend_side = "right")
+combined.heatmap <- normal.heatmap + tumor.heatmap
+final.heatmap <- grid.grabExpr(draw(combined.heatmap, column_title = "Spearman correlation between CINmetrics", row_dend_side = "right", column_title_gp = gpar(fontface = "bold", fontsize = 12)))
+
+## Plotting and saving figure1 in pdf format
+pdf("Fig1.pdf", width = 14, height = 6) # Open a new pdf file
+plot_grid(figure2, final.heatmap, nrow = 1, ncol = 2, align = "hv", axis = "tb",
+          rel_widths = c(1,1), labels = c('A','B'))
+dev.off() # Close the file
+
+## Plotting and saving figure1 in jpeg format
+jpeg("Fig1.jpeg", width = 12, height = 6, units = 'in', res = 350) # Open a new pdf file
+plot_grid(figure2, final.heatmap, nrow = 1, ncol = 2, align = "hv", axis = "tb",
+          rel_widths = c(1,1), labels = c('A','B'))
+dev.off() # Close the file
+
+```
