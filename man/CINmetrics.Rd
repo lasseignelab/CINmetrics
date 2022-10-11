@@ -6,6 +6,7 @@
 \usage{
 CINmetrics(
   cnvData,
+  sample_column = 1,
   segmentMean_tai = 0.2,
   segmentMean_cna = (log(1.7, 2) - 1),
   segmentMean_base_segments = 0.2,
@@ -19,6 +20,8 @@ CINmetrics(
 }
 \arguments{
 \item{cnvData}{dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean}
+
+\item{sample_column}{numerical value for the sample column number, default is 1}
 
 \item{segmentMean_tai}{numerical value for the minimum segment_mean cutoff/ threshold for Total Aberration Index calculation. Default is 0.2}
 

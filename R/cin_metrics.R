@@ -16,17 +16,18 @@
 #' }
 #'
 #' @param cnvData dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean
+#' @param sample_column numerical value for the sample column number, default is 1
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @return Average of lengths weighted by segmentation mean for each unique sample
 #' @examples tai(cnvData = maskCNV_BRCA)
 #' @export
-tai <- function(cnvData, segmentMean = 0.2, numProbes = NA ){
-  unique_id <- unique(cnvData$Sample)
+tai <- function(cnvData, sample_column = 1, segmentMean = 0.2, numProbes = NA ){
+  unique_id <- unique(cnvData[,sample_column])
   tai.output <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(unique_id)), stringsAsFactors = FALSE),c("sample_id","tai"))
   for (i in 1:length(unique_id)){
     id <- unique_id[i]
-    subsetSample <- subset(cnvData, cnvData$Sample == id)
+    subsetSample <- subset(cnvData, cnvData[,sample_column] == id)
     subsetSample <- subset(subsetSample, abs(subsetSample$Segment_Mean) >= segmentMean)
     if (!is.na(numProbes)){
       subsetSample <- subset(subsetSample, abs(subsetSample$Num_Probes) >= numProbes)
@@ -58,17 +59,18 @@ tai <- function(cnvData, segmentMean = 0.2, numProbes = NA ){
 #'
 #' @seealso \code{\link{tai}}
 #' @param cnvData dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean
+#' @param sample_column numerical value for the sample column number, default is 1
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @return Average of lengths weighted by segmentation mean for each unique sample
 #' @examples taiModified(cnvData = maskCNV_BRCA)
 #' @export
-taiModified <- function(cnvData, segmentMean = 0, numProbes = NA ){
-  unique_id <- unique(cnvData$Sample)
+taiModified <- function(cnvData, sample_column = 1, segmentMean = 0, numProbes = NA ){
+  unique_id <- unique(cnvData[,sample_column])
   tai.output <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(unique_id)), stringsAsFactors = FALSE),c("sample_id","modified_tai"))
   for (i in 1:length(unique_id)){
     id <- unique_id[i]
-    subsetSample <- subset(cnvData, cnvData$Sample == id )
+    subsetSample <- subset(cnvData, cnvData[,sample_column] == id )
     subsetSample <- subset(subsetSample, abs(subsetSample$Segment_Mean) >= segmentMean)
     if (!is.na(numProbes)){
       subsetSample<-subset(subsetSample, abs(subsetSample$Num_Probes) >= numProbes)
@@ -96,6 +98,7 @@ taiModified <- function(cnvData, segmentMean = 0, numProbes = NA ){
 #'
 #' @seealso \code{\link{countingBreakPoints}}
 #' @param cnvData dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean
+#' @param sample_column numerical value for the sample column number, default is 1
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @param segmentDistance Segment distance threshold
@@ -103,12 +106,12 @@ taiModified <- function(cnvData, segmentMean = 0, numProbes = NA ){
 #' @return Number of copy number aberrations between segments
 #' @examples cna(cnvData = maskCNV_BRCA)
 #' @export
-cna <- function(cnvData, segmentMean = (log(1.7,2)-1), numProbes = NA, segmentDistance = 0.2, minSegSize = 10){
-  unique_id <- unique(cnvData$Sample)
+cna <- function(cnvData, sample_column = 1, segmentMean = (log(1.7,2)-1), numProbes = NA, segmentDistance = 0.2, minSegSize = 10){
+  unique_id <- unique(cnvData[,sample_column])
   cna.output <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(unique_id)), stringsAsFactors = FALSE),c("sample_id","cna"))
   for (i in 1:length(unique_id)){
     id <- unique_id[i]
-    exSample <- subset(cnvData, cnvData$Sample == id )
+    exSample <- subset(cnvData, cnvData[,sample_column] == id )
     exSample <- subset(exSample, abs(exSample$Segment_Mean) >= abs(segmentMean) & !is.na(exSample$Segment_Mean))
     exSample <- subset(exSample, abs(exSample$End - exSample$Start) >= minSegSize)
     if (!is.na(numProbes)){
@@ -145,17 +148,18 @@ cna <- function(cnvData, segmentMean = (log(1.7,2)-1), numProbes = NA, segmentDi
 #' }
 #'
 #' @param cnvData dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean
+#' @param sample_column numerical value for the sample column number, default is 1
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @return Number of Base segments for each unique sample
 #' @examples countingBaseSegments(cnvData = maskCNV_BRCA)
 #' @export
-countingBaseSegments <- function(cnvData, segmentMean = 0.2, numProbes = NA ){
-  unique_id <- unique(cnvData$Sample)
+countingBaseSegments <- function(cnvData, sample_column = 1, segmentMean = 0.2, numProbes = NA ){
+  unique_id <- unique(cnvData[,sample_column])
   NumBases <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(unique_id)), stringsAsFactors = FALSE),c("sample_id","base_segments"))
   for (i in 1:length(unique_id)){
     id <- unique_id[i]
-    exSample<-subset(cnvData, cnvData$Sample == id )
+    exSample<-subset(cnvData, cnvData[,sample_column] == id )
     exSample<-subset(exSample, abs(exSample$Segment_Mean) >= segmentMean)
     if (!is.na(numProbes)){
       exSample<-subset(exSample, abs(exSample$Num_Probes) >= numProbes)
@@ -178,17 +182,18 @@ countingBaseSegments <- function(cnvData, segmentMean = 0.2, numProbes = NA ){
 #' }
 #'
 #' @param cnvData dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean
+#' @param sample_column numerical value for the sample column number, default is 1
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @return Number of Break points for each unique sample
 #' @example countingBreakPoints(cnvData = maskCNV_BRCA)
 #' @export
-countingBreakPoints <- function(cnvData, segmentMean = 0.2, numProbes = NA){
-  unique_id <- unique(cnvData$Sample)
+countingBreakPoints <- function(cnvData, sample_column = 1, segmentMean = 0.2, numProbes = NA){
+  unique_id <- unique(cnvData[,sample_column])
   NumBpt <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(unique_id)), stringsAsFactors = FALSE),c("sample_id","break_points"))
   for (i in 1:length(unique_id)){
     id <- unique_id[i]
-    exSample<-subset(cnvData, cnvData$Sample == id )
+    exSample<-subset(cnvData, cnvData[,sample_column] == id )
     exSample<-subset(exSample, abs(exSample$Segment_Mean) >= segmentMean)
     if (!is.na(numProbes)){
       exSample<-subset(exSample, abs(exSample$Num_Probes) >= numProbes)
@@ -214,19 +219,20 @@ countingBreakPoints <- function(cnvData, segmentMean = 0.2, numProbes = NA){
 #' }
 #'
 #' @param cnvData dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean
+#' @param sample_column numerical value for the sample column number, default is 1
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
 #' @param genomeSize Size of the genome derived from Affymetrix 6.0 array probe. Default is 2873203431 calculated based on hg38 **excluding sex chromosomes**
 #' @return Fraction of the genome altered
 #' @examples fga(cnvData = maskCNV_BRCA)
 #' @export
-fga <- function(cnvData, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203431){
+fga <- function(cnvData, sample_column = 1, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203431){
   # genomeSize derived from Affymetrix 6.0 array probe information. The default values is 2873203431 based on hg38
-  unique_id <- unique(cnvData$Sample)
+  unique_id <- unique(cnvData[,sample_column])
   fgaOutput <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(unique_id)), stringsAsFactors = FALSE),c("sample_id","fga"))
   for (i in 1:length(unique_id)){
     id <- unique_id[i]
-    subsetSample <- subset(cnvData, cnvData$Sample == id )
+    subsetSample <- subset(cnvData, cnvData[,sample_column] == id )
     subsetSample <- subset(subsetSample, subsetSample$Chromosome %in% c(1:22))
     subsetSample <- subset(subsetSample, abs(subsetSample$Segment_Mean) >= segmentMean)
     if (!is.na(numProbes)){
@@ -247,6 +253,7 @@ fga <- function(cnvData, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203
 #' Calculate all CINmetrics on a given dataframe
 #'
 #' @param cnvData dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean
+#' @param sample_column numerical value for the sample column number, default is 1
 #' @param segmentMean_tai numerical value for the minimum segment_mean cutoff/ threshold for Total Aberration Index calculation. Default is 0.2
 #' @param segmentMean_cna numerical value for the minimum segment_mean cutoff/ threshold for Copy Number Aberration calculation. Default is 0.2
 #' @param segmentMean_base_segments numerical value for the minimum segment_mean cutoff/ threshold for Base segments calculation. Default is 0.2
@@ -259,9 +266,9 @@ fga <- function(cnvData, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203
 #' @return All Chromosomal INstability metrics
 #' @examples CINmetrics(cnvData = maskCNV_BRCA)
 #' @export
-CINmetrics <- function(cnvData, segmentMean_tai = 0.2, segmentMean_cna = (log(1.7,2)-1), segmentMean_base_segments = 0.2, segmentMean_break_points = 0.2, segmentMean_fga = 0.2, numProbes = NA, segmentDistance_cna = 0.2, minSegSize_cna = 10, genomeSize_fga = 2873203431){
+CINmetrics <- function(cnvData, sample_column = 1, segmentMean_tai = 0.2, segmentMean_cna = (log(1.7,2) - 1), segmentMean_base_segments = 0.2, segmentMean_break_points = 0.2, segmentMean_fga = 0.2, numProbes = NA, segmentDistance_cna = 0.2, minSegSize_cna = 10, genomeSize_fga = 2873203431){
   # Calculate all Chromosomal Instability metrics as a single data frame
-  unique_id <- unique(cnvData$Sample)
+  unique_id <- unique(cnvData[,sample_column])
   cinmetrics <- data.frame(matrix(ncol = 6, nrow = length(unique_id)), stringsAsFactors = FALSE)
   tai <- CINmetrics::tai(cnvData = cnvData, segmentMean = segmentMean_tai, numProbes = numProbes)
   cna <- CINmetrics::cna(cnvData = cnvData, segmentMean = segmentMean_cna, numProbes = numProbes, segmentDistance = segmentDistance_cna, minSegSize = minSegSize_cna)

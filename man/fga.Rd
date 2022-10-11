@@ -4,10 +4,18 @@
 \alias{fga}
 \title{Fraction Genome Altered}
 \usage{
-fga(cnvData, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203431)
+fga(
+  cnvData,
+  sample_column = 1,
+  segmentMean = 0.2,
+  numProbes = NA,
+  genomeSize = 2873203431
+)
 }
 \arguments{
 \item{cnvData}{dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean}
+
+\item{sample_column}{numerical value for the sample column number, default is 1}
 
 \item{segmentMean}{numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2}
 
