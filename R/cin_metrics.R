@@ -106,7 +106,7 @@ taiModified <- function(cnvData, sample_column = 1, segmentMean = 0, numProbes =
 #' @return Number of copy number aberrations between segments
 #' @examples cna(cnvData = maskCNV_BRCA)
 #' @export
-cna <- function(cnvData, sample_column = 1, segmentMean = (log(1.7,2)-1), numProbes = NA, segmentDistance = 0.2, minSegSize = 10){
+cna <- function(cnvData, sample_column = 1, segmentMean = (log(2.3,2)-1), numProbes = NA, segmentDistance = 0.2, minSegSize = 10){
   unique_id <- unique(cnvData[,sample_column])
   cna.output <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(unique_id)), stringsAsFactors = FALSE),c("sample_id","cna"))
   for (i in 1:length(unique_id)){
