@@ -218,7 +218,7 @@ countingBreakPoints <- function(cnvData, sample_column = 1, segmentMean = 0.2, n
 #' \ \ where\  |\bar{y}_{S_i}| \ge 0.2
 #' }
 #'
-#' @param cnvData dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean
+#' @param cnvData dataframe containing following columns: Sample, Chromosome, Start, End, Num_Probes, Segment_Mean
 #' @param sample_column numerical value for the sample column number, default is 1
 #' @param segmentMean numerical value for the minimum segment_mean cutoff/ threshold. Default is 0.2
 #' @param numProbes Number of Probes
@@ -229,6 +229,7 @@ countingBreakPoints <- function(cnvData, sample_column = 1, segmentMean = 0.2, n
 fga <- function(cnvData, sample_column = 1, segmentMean = 0.2, numProbes = NA, genomeSize = 2873203431){
   # genomeSize derived from Affymetrix 6.0 array probe information. The default values is 2873203431 based on hg38
   unique_id <- unique(cnvData[,sample_column])
+  if(!("Chromosome" %in% colnames(cnvData))){print("Please include column named 'Chromosome' with Chromosome number. Check documentation")}
   fgaOutput <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(unique_id)), stringsAsFactors = FALSE),c("sample_id","fga"))
   for (i in 1:length(unique_id)){
     id <- unique_id[i]

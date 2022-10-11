@@ -13,7 +13,7 @@ fga(
 )
 }
 \arguments{
-\item{cnvData}{dataframe containing following columns: Sample, Start, End, Num_Probes, Segment_Mean}
+\item{cnvData}{dataframe containing following columns: Sample, Chromosome, Start, End, Num_Probes, Segment_Mean}
 
 \item{sample_column}{numerical value for the sample column number, default is 1}
 
