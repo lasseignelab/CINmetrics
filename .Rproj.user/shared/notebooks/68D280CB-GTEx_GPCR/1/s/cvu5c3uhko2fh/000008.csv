@@ -1,6 +1,0 @@
-"0","# Return only the genes with annotations using indices
-annotations_mouse <- annotations_mouse[non_na_idx, ]
-"
-"2","Error in `[.data.frame`(annotations_mouse, non_na_idx, ) : 
-  object 'non_na_idx' not found
-"

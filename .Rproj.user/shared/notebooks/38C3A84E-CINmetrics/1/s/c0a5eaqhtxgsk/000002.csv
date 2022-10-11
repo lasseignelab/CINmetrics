@@ -1,5 +1,0 @@
-"0","maskCNV.BRCA <- GDCprepare(query = query.maskCNV.hg39.BRCA, summarizedExperiment = FALSE)
-"
-"2","Error in GDCprepare(query = query.maskCNV.hg39.BRCA, summarizedExperiment = FALSE) : 
-  I couldn't find all the files from the query. Please check if the directory parameter is right or `GDCdownload` downloaded the samples.
-"
